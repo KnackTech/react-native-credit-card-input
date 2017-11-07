@@ -1,12 +1,13 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import ReactNative, {
   NativeModules,
   View,
+  ViewPropTypes,
   Text,
   StyleSheet,
   ScrollView,
   Dimensions,
-  TextInput,
 } from "react-native";
 
 import CreditCard from "./CardView";
@@ -48,7 +49,7 @@ export default class CreditCardInput extends Component {
 
     labelStyle: Text.propTypes.style,
     inputStyle: Text.propTypes.style,
-    inputContainerStyle: View.propTypes.style,
+    inputContainerStyle: ViewPropTypes.style,
 
     validColor: PropTypes.string,
     invalidColor: PropTypes.string,
@@ -61,8 +62,6 @@ export default class CreditCardInput extends Component {
     cardBrandIcons: PropTypes.object,
 
     allowScroll: PropTypes.bool,
-
-    additionalInputsProps: PropTypes.objectOf(PropTypes.shape(TextInput.propTypes)),
   };
 
   static defaultProps = {
@@ -89,7 +88,6 @@ export default class CreditCardInput extends Component {
     invalidColor: "red",
     placeholderColor: "gray",
     allowScroll: false,
-    additionalInputsProps: {},
   };
 
   componentDidMount = () => this._focus(this.props.focused);
@@ -117,7 +115,6 @@ export default class CreditCardInput extends Component {
       inputStyle, labelStyle, validColor, invalidColor, placeholderColor,
       placeholders, labels, values, status,
       onFocus, onChange, onBecomeEmpty, onBecomeValid,
-      additionalInputsProps,
     } = this.props;
 
     return {
@@ -132,8 +129,6 @@ export default class CreditCardInput extends Component {
       status: status[field],
 
       onFocus, onChange, onBecomeEmpty, onBecomeValid,
-
-      additionalInputProps: additionalInputsProps[field],
     };
   };
 
@@ -160,7 +155,7 @@ export default class CreditCardInput extends Component {
             cvc={cvc} />
         <ScrollView ref="Form"
             horizontal
-            keyboardShouldPersistTaps="always"
+            keyboardShouldPersistTaps={'always'}
             scrollEnabled={allowScroll}
             showsHorizontalScrollIndicator={false}
             style={s.form}>
